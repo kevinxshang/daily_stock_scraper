@@ -3,7 +3,7 @@ name: Daily Scraper
 # Trigger the workflow every 24 hours
 on:
   schedule:
-    - cron: "25 3 * * *" # Runs at midnight UTC daily
+    - cron: "15 3 * * *" # Runs at midnight UTC daily
 
 jobs:
   scrape-job:
