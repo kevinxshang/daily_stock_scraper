@@ -2,8 +2,9 @@ name: Daily Scraper
 
 # Trigger the workflow every 24 hours
 on:
+  workflow_dispatch: # Allows manual trigger
   schedule:
-    - cron: "15 3 * * *" # Runs at midnight UTC daily
+    - cron: "25 3 * * *" # 10:25 PM EST
 
 jobs:
   scrape-job:
