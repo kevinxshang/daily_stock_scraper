@@ -27,12 +27,15 @@ def scrape_yahoo_finance_intraday():
                 interval='1m',
                 #start=start_date.strftime('%Y-%m-%d'),
                 #end=end_date.strftime('%Y-%m-%d')
-                start = '2025-01-23',
-                end = '2025-01-24'
+                start = '2025-01-21',
+                end = '2025-01-22'
             )
 
             if intraday_data.empty:
                 continue  # Skip if no data is available
+
+            # Normalize column names
+            intraday_data.columns = [col[0] if isinstance(col, tuple) else col for col in intraday_data.columns]
 
             # File path for the CSV file
             file_path = os.path.join(folder_path, f"{ticker.lower()}_intraday.csv")
@@ -40,6 +43,9 @@ def scrape_yahoo_finance_intraday():
             if os.path.exists(file_path):
                 # Read existing data
                 existing_data = pd.read_csv(file_path, index_col=0, parse_dates=True)
+
+                # Ensure the columns match exactly before appending
+                intraday_data = intraday_data[existing_data.columns]
 
                 # Append new data to the existing data
                 combined_data = pd.concat([existing_data, intraday_data])
@@ -54,8 +60,8 @@ def scrape_yahoo_finance_intraday():
             combined_data.to_csv(file_path)
             print(f"Updated {file_path}.")
 
-        except Exception:
-            pass  # Silently continue to the next ticker if there's an error
+        except Exception as e:
+            print(f"Error for {ticker}: {e}")  # Log the error for debugging
 
 if __name__ == "__main__":
     scrape_yahoo_finance_intraday()
