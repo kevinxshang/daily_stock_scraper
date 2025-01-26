@@ -28,4 +28,4 @@ jobs:
 
       # Step 4: Run the script
       - name: Run scraper
-        run: python scraper.py
+        run: python yf_scraper.py
