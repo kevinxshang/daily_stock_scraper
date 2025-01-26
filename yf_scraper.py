@@ -41,6 +41,8 @@ def scrape_yahoo_finance_intraday():
                 # Read existing data
                 existing_data = pd.read_csv(file_path, index_col=0, parse_dates=True)
 
+                intraday_data.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+
                 # Append new data to the existing data
                 combined_data = pd.concat([existing_data, intraday_data])
                 
