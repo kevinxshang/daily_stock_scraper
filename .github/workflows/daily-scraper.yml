@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Run the scraper script
       - name: Run scraper
-        run: python scraper.py
+        run: python yf_scraper.py
 
       # Step 6: Debugging - Verify file updates
       - name: List stock_data contents
