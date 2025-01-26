@@ -28,7 +28,7 @@ jobs:
 
       # Step 4: Run the scraper script
       - name: Run scraper
-        run: python scraper.py
+        run: python yf_scraper.py
 
       # Step 5: Commit and push updated files
       - name: Commit and push changes if any
