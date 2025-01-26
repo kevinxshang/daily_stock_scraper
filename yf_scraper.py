@@ -2,20 +2,21 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
 import os
-import stock_data_test
-
 
 def scrape_yahoo_finance_intraday():
     """
     Scrape 2 days' worth of intraday data for stocks listed in stock_data.py
-    and update the respective CSV files.
+    and update the respective CSV files in the 'stock_data' folder.
     """
-    # Define the start and end dates for 2 days of data
-    stock_names = stock_data_test.stock_names
-    print(stock_names)
+    from stock_data_test import stock_names  # Import tickers from stock_data.py
 
+    # Define the start and end dates for 2 days of data
     end_date = datetime.now()
     start_date = end_date - timedelta(days=2)
+
+    # Ensure the folder exists
+    folder_path = "stock_data"
+    os.makedirs(folder_path, exist_ok=True)
 
     for ticker in stock_names:
         try:
@@ -26,15 +27,13 @@ def scrape_yahoo_finance_intraday():
                 interval='1m',
                 start=start_date.strftime('%Y-%m-%d'),
                 end=end_date.strftime('%Y-%m-%d')
-                #start = '2025-01-21',
-                #end = '2025-01-23'
             )
 
             if intraday_data.empty:
                 continue  # Skip if no data is available
 
             # File path for the CSV file
-            file_path = f"{ticker.lower()}_intraday.csv"
+            file_path = os.path.join(folder_path, f"{ticker.lower()}_intraday.csv")
 
             if os.path.exists(file_path):
                 # Read existing data

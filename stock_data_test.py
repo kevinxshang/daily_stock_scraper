@@ -1,0 +1,1 @@
+stock_names = ["AAPL", "NVDA", "MSFT"]
