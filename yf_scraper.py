@@ -37,7 +37,21 @@ def scrape_yahoo_finance_intraday():
 
             print(intraday_data.head())
 
-            #intraday_data.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+            if isinstance(intraday_data.columns, pd.MultiIndex):
+                # Flatten the multi-level columns
+                intraday_data.columns = [' '.join(col).strip() for col in intraday_data.columns.values]
+
+                # Rename the columns to match the desired format
+                intraday_data = intraday_data.rename(columns={
+                    f'Open {ticker}': 'Open',
+                    f'High {ticker}': 'High',
+                    f'Low {ticker}': 'Low',
+                    f'Close {ticker}': 'Close',
+                    f'Adj Close {ticker}': 'Adj Close',
+                    f'Volume {ticker}': 'Volume'
+                })
+            else:
+                print(f"Columns are already in single-level format for {ticker}.")
 
             # File path for the CSV file
             file_path = os.path.join(folder_path, f"{ticker.lower()}_intraday.csv")
