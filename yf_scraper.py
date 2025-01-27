@@ -31,11 +31,23 @@ def scrape_yahoo_finance_intraday():
                 end = '2025-01-25'
             )
 
+            adj_close_data = yf.download(
+                ticker,
+                interval='1m',
+                #start=start_date.strftime('%Y-%m-%d'),
+                #end=end_date.strftime('%Y-%m-%d')
+                start = '2025-01-24',
+                end = '2025-01-25'
+            )[['Adj Close']]
+
+            print(adj_close_data)
+
             if intraday_data.empty:
                 print(f"No data retrieved for {ticker}.")
                 continue  # Skip if no data is available
 
-            print(intraday_data.head())
+            print(intraday_data.columns)
+            print(intraday_data[1])
 
             if isinstance(intraday_data.columns, pd.MultiIndex):
                 # Flatten the multi-level columns
@@ -52,6 +64,8 @@ def scrape_yahoo_finance_intraday():
                 })
             else:
                 print(f"Columns are already in single-level format for {ticker}.")
+            
+            print(intraday_data.head())
 
             # File path for the CSV file
             file_path = os.path.join(folder_path, f"{ticker.lower()}_intraday.csv")
