@@ -35,7 +35,9 @@ def scrape_yahoo_finance_intraday():
                 print(f"No data retrieved for {ticker}.")
                 continue  # Skip if no data is available
 
-            intraday_data.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+            print(intraday_data.head())
+
+            #intraday_data.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
 
             # File path for the CSV file
             file_path = os.path.join(folder_path, f"{ticker.lower()}_intraday.csv")
