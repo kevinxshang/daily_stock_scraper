@@ -27,8 +27,8 @@ def scrape_yahoo_finance_intraday():
                 interval='1m',
                 #start=start_date.strftime('%Y-%m-%d'),
                 #end=end_date.strftime('%Y-%m-%d')
-                start = '2025-01-20',
-                end = '2025-01-25'
+                start = '2025-01-25',
+                end = '2025-01-27'
             )
 
             if intraday_data.empty:
